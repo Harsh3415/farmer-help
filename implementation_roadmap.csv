@@ -1,0 +1,11 @@
+Phase,Task,Duration,Priority,Skills Required
+"Setup","Install XAMPP/server environment","1 day","High","Basic computer skills"
+"Database","Import database schema","0.5 day","High","Basic database knowledge"
+"Configuration","Configure database connection","0.5 day","High","Basic PHP knowledge"
+"Testing","Test all API endpoints","1 day","High","Web development basics"
+"Frontend","Customize UI for local needs","2 days","Medium","HTML/CSS/JavaScript"
+"Data Entry","Add local crop and market data","3 days","Medium","Data entry skills"
+"Training","Train farmers on app usage","5 days","High","Communication skills"
+"Deployment","Deploy to production server","1 day","High","Server administration"
+"Maintenance","Regular updates and backup","Ongoing","High","System administration"
+"Expansion","Add new features based on feedback","Ongoing","Low","Full development skills"

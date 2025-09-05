@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कृषि सहायक - Krishi Sahayak</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__content">
+            <h1 class="header__title">🌾 कृषि सहायक</h1>
+            <div class="header__actions">
+                <button class="btn btn--secondary header__menu-toggle" onclick="toggleSidebar()">☰</button>
+                <span class="header__location">📍 गाजीपुर, उत्तर प्रदेश</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar__header">
+                <h3>नमस्ते राम कुमार जी</h3>
+            </div>
+            <ul class="sidebar__menu">
+                <li><a href="#" onclick="showSection('dashboard')" class="sidebar__link active">🏠 डैशबोर्ड</a></li>
+                <li><a href="#" onclick="showSection('crops')" class="sidebar__link">🌱 फसल प्रबंधन</a></li>
+                <li><a href="#" onclick="showSection('weather')" class="sidebar__link">🌦️ मौसम</a></li>
+                <li><a href="#" onclick="showSection('market')" class="sidebar__link">💰 बाजार भाव</a></li>
+                <li><a href="#" onclick="showSection('expert')" class="sidebar__link">👨‍🌾 विशेषज्ञ सलाह</a></li>
+                <li><a href="#" onclick="showSection('tips')" class="sidebar__link">💡 कृषि टिप्स</a></li>
+                <li><a href="#" onclick="showSection('records')" class="sidebar__link">📊 खेत रिकॉर्ड</a></li>
+                <li><a href="#" onclick="showSection('settings')" class="sidebar__link">⚙️ सेटिंग्स</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="section__header">
+                    <h2>डैशबोर्ड</h2>
+                    <p>आज का दिन: <span id="currentDate"></span></p>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card__icon">🌱</div>
+                        <div class="stat-card__info">
+                            <h3>2</h3>
+                            <p>कुल फसलें</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__icon">🌡️</div>
+                        <div class="stat-card__info">
+                            <h3>28°C</h3>
+                            <p>आज का तापमान</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__icon">💰</div>
+                        <div class="stat-card__info">
+                            <h3>₹2,150</h3>
+                            <p>धान का भाव</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__icon">📅</div>
+                        <div class="stat-card__info">
+                            <h3>45</h3>
+                            <p>दिन बाकी कटाई</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>त्वरित कार्य</h3>
+                    <div class="action-buttons">
+                        <button class="btn btn--primary" onclick="showSection('crops')">नई फसल जोड़ें</button>
+                        <button class="btn btn--secondary" onclick="showSection('weather')">मौसम देखें</button>
+                        <button class="btn btn--secondary" onclick="showSection('market')">भाव देखें</button>
+                        <button class="btn btn--secondary" onclick="showSection('expert')">सलाह लें</button>
+                    </div>
+                </div>
+
+                <!-- Current Crops Status -->
+                <div class="current-crops">
+                    <h3>वर्तमान फसलों की स्थिति</h3>
+                    <div class="crops-grid">
+                        <div class="crop-card">
+                            <div class="crop-card__header">
+                                <h4>🌾 धान</h4>
+                                <span class="status status--warning">फूल आना</span>
+                            </div>
+                            <div class="crop-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-bar__fill" style="width: 65%"></div>
+                                </div>
+                                <span>65% पूर्ण</span>
+                            </div>
+                            <p class="crop-action">अगला कार्य: कीटनाशक छिड़काव</p>
+                        </div>
+                        <div class="crop-card">
+                            <div class="crop-card__header">
+                                <h4>🌾 गेहूं</h4>
+                                <span class="status status--info">तैयारी</span>
+                            </div>
+                            <div class="crop-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-bar__fill" style="width: 10%"></div>
+                                </div>
+                                <span>10% पूर्ण</span>
+                            </div>
+                            <p class="crop-action">अगला कार्य: खेत की तैयारी</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Crop Management Section -->
+            <section id="crops" class="section">
+                <div class="section__header">
+                    <h2>फसल प्रबंधन</h2>
+                    <button class="btn btn--primary" onclick="showAddCropForm()">नई फसल जोड़ें</button>
+                </div>
+
+                <!-- Add Crop Form (Hidden by default) -->
+                <div id="addCropForm" class="form-container hidden">
+                    <form class="add-crop-form" onsubmit="addNewCrop(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">फसल का नाम</label>
+                                <select class="form-control" id="cropName" required>
+                                    <option value="">फसल चुनें</option>
+                                    <option value="धान">धान</option>
+                                    <option value="गेहूं">गेहूं</option>
+                                    <option value="मक्का">मक्का</option>
+                                    <option value="बाजरा">बाजरा</option>
+                                    <option value="दालें">दालें</option>
+                                    <option value="सरसों">सरसों</option>
+                                    <option value="आलू">आलू</option>
+                                    <option value="टमाटर">टमाटर</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">खेत का स्थान</label>
+                                <input type="text" class="form-control" id="fieldLocation" placeholder="उदा: उत्तरी खेत" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">बुआई की तारीख</label>
+                                <input type="date" class="form-control" id="plantDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">अनुमानित कटाई</label>
+                                <input type="date" class="form-control" id="harvestDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">खेत का आकार (एकड़ में)</label>
+                                <input type="number" class="form-control" id="fieldSize" placeholder="उदा: 2.5" step="0.1" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">वर्तमान अवस्था</label>
+                                <select class="form-control" id="cropStage" required>
+                                    <option value="बुआई की तैयारी">बुआई की तैयारी</option>
+                                    <option value="अंकुरण">अंकुरण</option>
+                                    <option value="वृद्धि">वृद्धि</option>
+                                    <option value="फूल आना">फूल आना</option>
+                                    <option value="फल बनना">फल बनना</option>
+                                    <option value="पकना">पकना</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn--primary">फसल जोड़ें</button>
+                            <button type="button" class="btn btn--secondary" onclick="hideAddCropForm()">रद्द करें</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- My Crops List -->
+                <div class="crops-list">
+                    <h3>मेरी फसलें</h3>
+                    <div id="cropsList" class="crops-grid">
+                        <!-- Crops will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Weather Section -->
+            <section id="weather" class="section">
+                <div class="section__header">
+                    <h2>मौसम की जानकारी</h2>
+                </div>
+
+                <!-- Current Weather -->
+                <div class="weather-current">
+                    <div class="weather-main">
+                        <div class="weather-icon">☁️</div>
+                        <div class="weather-info">
+                            <h3>28°C</h3>
+                            <p>आंशिक बादल</p>
+                        </div>
+                    </div>
+                    <div class="weather-details">
+                        <div class="weather-detail">
+                            <span>नमी</span>
+                            <span>65%</span>
+                        </div>
+                        <div class="weather-detail">
+                            <span>हवा</span>
+                            <span>12 किमी/घंटा</span>
+                        </div>
+                        <div class="weather-detail">
+                            <span>बारिश</span>
+                            <span>0 मिमी</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5-Day Forecast -->
+                <div class="weather-forecast">
+                    <h3>5 दिन का मौसम पूर्वानुमान</h3>
+                    <div class="forecast-grid">
+                        <div class="forecast-card">
+                            <h4>आज</h4>
+                            <div class="forecast-icon">☀️</div>
+                            <div class="forecast-temps">
+                                <span class="high">30°</span>
+                                <span class="low">22°</span>
+                            </div>
+                            <p>बारिश: 0%</p>
+                        </div>
+                        <div class="forecast-card">
+                            <h4>कल</h4>
+                            <div class="forecast-icon">☀️</div>
+                            <div class="forecast-temps">
+                                <span class="high">32°</span>
+                                <span class="low">24°</span>
+                            </div>
+                            <p>बारिश: 10%</p>
+                        </div>
+                        <div class="forecast-card">
+                            <h4>परसों</h4>
+                            <div class="forecast-icon">🌧️</div>
+                            <div class="forecast-temps">
+                                <span class="high">29°</span>
+                                <span class="low">21°</span>
+                            </div>
+                            <p>बारिश: 80%</p>
+                        </div>
+                        <div class="forecast-card">
+                            <h4>बुधवार</h4>
+                            <div class="forecast-icon">☁️</div>
+                            <div class="forecast-temps">
+                                <span class="high">26°</span>
+                                <span class="low">20°</span>
+                            </div>
+                            <p>बारिश: 60%</p>
+                        </div>
+                        <div class="forecast-card">
+                            <h4>बृहस्पति</h4>
+                            <div class="forecast-icon">☀️</div>
+                            <div class="forecast-temps">
+                                <span class="high">28°</span>
+                                <span class="low">22°</span>
+                            </div>
+                            <p>बारिश: 20%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Alerts -->
+                <div class="weather-alerts">
+                    <h3>मौसम चेतावनी</h3>
+                    <div class="alert alert--warning">
+                        <strong>बारिश की संभावना:</strong> परसों भारी बारिश हो सकती है। फसल की सुरक्षा करें।
+                    </div>
+                </div>
+            </section>
+
+            <!-- Market Prices Section -->
+            <section id="market" class="section">
+                <div class="section__header">
+                    <h2>बाजार भाव</h2>
+                    <button class="btn btn--secondary" onclick="refreshPrices()">रिफ्रेश करें</button>
+                </div>
+
+                <!-- Price Table -->
+                <div class="price-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>फसल</th>
+                                <th>भाव (प्रति क्विंटल)</th>
+                                <th>बदलाव</th>
+                                <th>मंडी</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pricesTable">
+                            <!-- Prices will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Price Chart -->
+                <div class="price-chart">
+                    <h3>भाव का रुझान</h3>
+                    <div class="chart-container" style="position: relative; height: 300px;">
+                        <canvas id="priceChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Expert Advice Section -->
+            <section id="expert" class="section">
+                <div class="section__header">
+                    <h2>विशेषज्ञ सलाह</h2>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="faq-section">
+                    <h3>अक्सर पूछे जाने वाले प्रश्न</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                धान में कीड़े लगने पर क्या करें?
+                            </button>
+                            <div class="faq-answer">
+                                <p>नीम का तेल (2-3 मिली प्रति लीटर पानी) या कॉपर ऑक्सीक्लोराइड का छिड़काव करें। 15 दिन बाद दोहराएं।</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                बारिश के बाद खेत की देखभाल कैसे करें?
+                            </button>
+                            <div class="faq-answer">
+                                <p>जल निकासी की व्यवस्था करें। फंगस से बचने के लिए फफूंदनाशी का छिड़काव करें।</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                मिट्टी की जांच कहाँ कराएं?
+                            </button>
+                            <div class="faq-answer">
+                                <p>नजदीकी कृषि विभाग के कार्यालय में या कृषि विज्ञान केंद्र में मिट्टी की जांच कराएं।</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ask Expert Form -->
+                <div class="ask-expert">
+                    <h3>विशेषज्ञ से प्रश्न पूछें</h3>
+                    <form onsubmit="submitQuestion(event)">
+                        <div class="form-group">
+                            <label class="form-label">आपका प्रश्न</label>
+                            <textarea class="form-control" rows="4" placeholder="यहाँ अपना प्रश्न लिखें..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">फसल का नाम (वैकल्पिक)</label>
+                            <input type="text" class="form-control" placeholder="उदा: धान">
+                        </div>
+                        <button type="submit" class="btn btn--primary">प्रश्न भेजें</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Agricultural Tips Section -->
+            <section id="tips" class="section">
+                <div class="section__header">
+                    <h2>कृषि टिप्स</h2>
+                </div>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-card__category">फसल प्रबंधन</div>
+                        <h3>धान की फसल की देखभाल</h3>
+                        <p>फूल आने के समय खेत में पानी की सही मात्रा बनाए रखें। कीटों से बचाव के लिए नीम का तेल का छिड़काव करें।</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-card__category">मिट्टी स्वास्थ्य</div>
+                        <h3>मिट्टी की जांच</h3>
+                        <p>हर 3 साल में मिट्टी की जांच कराएं। सही पोषक तत्वों की जानकारी के लिए नजदीकी कृषि विभाग से संपर्क करें।</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-card__category">जल प्रबंधन</div>
+                        <h3>पानी की बचत</h3>
+                        <p>ड्रिप सिंचाई और स्प्रिंकलर का उपयोग करके 40% तक पानी की बचत करें। बारिश के पानी को इकट्ठा करें।</p>
+                    </div>
+                </div>
+
+                <!-- Government Schemes -->
+                <div class="schemes-section">
+                    <h3>सरकारी योजनाएं</h3>
+                    <div class="schemes-grid">
+                        <div class="scheme-card">
+                            <h4>PM-KISAN</h4>
+                            <p class="scheme-benefit">₹6,000/वर्ष</p>
+                            <p>सभी भूमिधारक किसानों को आर्थिक सहायता</p>
+                        </div>
+                        <div class="scheme-card">
+                            <h4>फसल बीमा योजना</h4>
+                            <p class="scheme-benefit">फसल नुकसान की भरपाई</p>
+                            <p>प्राकृतिक आपदाओं से हुए नुकसान का बीमा</p>
+                        </div>
+                        <div class="scheme-card">
+                            <h4>मृदा स्वास्थ्य कार्ड</h4>
+                            <p class="scheme-benefit">मुफ्त मिट्टी जांच</p>
+                            <p>मिट्टी की गुणवत्ता की जानकारी</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Farm Records Section -->
+            <section id="records" class="section">
+                <div class="section__header">
+                    <h2>खेत रिकॉर्ड</h2>
+                    <button class="btn btn--primary" onclick="addNewRecord()">नया रिकॉर्ड जोड़ें</button>
+                </div>
+
+                <div class="records-tabs">
+                    <button class="tab-btn active" onclick="showRecordTab('income')">आय-व्यय</button>
+                    <button class="tab-btn" onclick="showRecordTab('yield')">उत्पादन</button>
+                    <button class="tab-btn" onclick="showRecordTab('expenses')">खर्च</button>
+                </div>
+
+                <!-- Income/Expense Records -->
+                <div id="income" class="record-content active">
+                    <div class="summary-cards">
+                        <div class="summary-card income">
+                            <h4>कुल आय</h4>
+                            <p>₹1,25,000</p>
+                        </div>
+                        <div class="summary-card expense">
+                            <h4>कुल खर्च</h4>
+                            <p>₹75,000</p>
+                        </div>
+                        <div class="summary-card profit">
+                            <h4>शुद्ध लाभ</h4>
+                            <p>₹50,000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Yield Records -->
+                <div id="yield" class="record-content">
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th>फसल</th>
+                                <th>उत्पादन (क्विंटल)</th>
+                                <th>प्रति एकड़ उत्पादन</th>
+                                <th>दिनांक</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>धान</td>
+                                <td>45</td>
+                                <td>22.5</td>
+                                <td>15/11/2024</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Expense Records -->
+                <div id="expenses" class="record-content">
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th>खर्च का प्रकार</th>
+                                <th>राशि</th>
+                                <th>दिनांक</th>
+                                <th>विवरण</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>बीज</td>
+                                <td>₹15,000</td>
+                                <td>10/07/2024</td>
+                                <td>धान के बीज</td>
+                            </tr>
+                            <tr>
+                                <td>उर्वरक</td>
+                                <td>₹25,000</td>
+                                <td>20/08/2024</td>
+                                <td>DAP और यूरिया</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="section">
+                <div class="section__header">
+                    <h2>सेटिंग्स</h2>
+                </div>
+
+                <div class="settings-form">
+                    <div class="form-group">
+                        <label class="form-label">किसान का नाम</label>
+                        <input type="text" class="form-control" value="राम कुमार">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">स्थान</label>
+                        <input type="text" class="form-control" value="गाजीपुर, उत्तर प्रदेश">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">फोन नंबर</label>
+                        <input type="tel" class="form-control" value="+91-9876543210">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">कुल जमीन (एकड़)</label>
+                        <input type="number" class="form-control" value="5" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">भाषा</label>
+                        <select class="form-control">
+                            <option value="hindi">हिंदी</option>
+                            <option value="english">English</option>
+                        </select>
+                    </div>
+                    <button class="btn btn--primary">सेटिंग्स सेव करें</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="notifications" class="notifications"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
